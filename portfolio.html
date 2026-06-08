@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gutla Rohith | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark: #1a1a2e;
+    --mid: #16213e;
+    --accent: #e94560;
+    --light: #f5f5f5;
+    --muted: #aaa;
+    --card: #0f3460;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--dark);
+    color: var(--light);
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(26,26,46,0.95);
+    backdrop-filter: blur(8px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--light); }
+
+  #home {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    background: radial-gradient(ellipse at 60% 40%, #0f3460 0%, var(--dark) 70%);
+  }
+  .hero-inner { max-width: 700px; }
+  .hero-greeting {
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .hero-tagline {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #c73652; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(233,69,96,0.35); }
+  .btn-outline { background: transparent; color: var(--light); border: 1px solid rgba(255,255,255,0.3); margin-left: 1rem; }
+  .btn-outline:hover { border-color: var(--light); background: rgba(255,255,255,0.06); }
+
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 2.5rem;
+  }
+  .divider { width: 40px; height: 3px; background: var(--accent); margin-bottom: 2rem; }
+
+  #about { background: var(--mid); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  /* FIXED PHOTO SECTION */
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+  }
+  /* Fallback avatar shown only when img fails to load */
+  .about-photo .fallback-avatar {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 1rem;
+  }
+  .about-photo .fallback-avatar svg { width: 60px; height: 60px; fill: var(--muted); }
+  .about-photo img.broken { display: none; }
+  .about-photo img.broken + .fallback-avatar { display: flex; }
+
+  .about-text p { color: var(--muted); margin-bottom: 1rem; }
+  .about-text p:first-child { color: var(--light); font-size: 1.05rem; }
+
+  #skills { background: var(--dark); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  .skill-pill {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .skill-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+  #projects { background: var(--mid); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--dark);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+  .project-thumb {
+    height: 160px;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+  }
+  .project-body { padding: 1.25rem; }
+  .project-body h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .project-body p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(233,69,96,0.15);
+    color: var(--accent);
+    border-radius: 3px;
+  }
+
+  #resume { background: var(--dark); text-align: center; }
+  #resume p { color: var(--muted); margin-bottom: 2rem; }
+
+  #contact { background: var(--mid); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .contact-info p { color: var(--muted); margin-bottom: 1.5rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .contact-item span:first-child { font-size: 1.2rem; }
+  .contact-item a { color: var(--muted); text-decoration: none; }
+  .contact-item a:hover { color: var(--accent); }
+  .form-group { margin-bottom: 1rem; }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    color: var(--light);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { height: 120px; resize: vertical; }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { max-width: 180px; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">Rohith.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+  <div class="hero-inner">
+    <p class="hero-greeting">Hello, I'm</p>
+    <h1 class="hero-name">Gutla Rohith</h1>
+    <p class="hero-tagline">A passionate web developer who loves building clean, functional, and user-friendly websites.</p>
+    <a href="#projects" class="btn btn-primary">View My Work</a>
+    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">About Me</h2>
+    <div class="divider"></div>
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="photo.jpg" alt="Gutla Rohith" onerror="this.classList.add('broken')">
+        <div class="fallback-avatar">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+          Add your photo
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Hi! I'm a web development enthusiast currently interning at Codsoft. I enjoy turning ideas into reality through clean code and thoughtful design.</p>
+        <p>I specialize in front-end development using HTML, CSS, and JavaScript. I'm always eager to learn new technologies and take on challenging projects that push my skills further.</p>
+        <p>When I'm not coding, you'll find me exploring new design trends, reading tech blogs, or working on personal side projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <p class="section-label">What I Know</p>
+    <h2 class="section-title">My Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+      <div class="skill-pill"><div class="skill-icon">🌐</div>HTML5</div>
+      <div class="skill-pill"><div class="skill-icon">🎨</div>CSS3</div>
+      <div class="skill-pill"><div class="skill-icon">⚡</div>JavaScript</div>
+      <div class="skill-pill"><div class="skill-icon">⚛️</div>React</div>
+      <div class="skill-pill"><div class="skill-icon">🐍</div>Python</div>
+      <div class="skill-pill"><div class="skill-icon">🗄️</div>SQL</div>
+      <div class="skill-pill"><div class="skill-icon">🐙</div>Git</div>
+      <div class="skill-pill"><div class="skill-icon">📱</div>Responsive Design</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <p class="section-label">What I've Built</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="divider"></div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb">🌐</div>
+        <div class="project-body">
+          <h3>Personal Portfolio</h3>
+          <p>A responsive personal portfolio website built from scratch to showcase my skills and projects.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🧮</div>
+        <div class="project-body">
+          <h3>Calculator App</h3>
+          <p>A fully functional calculator with keyboard support, history panel, and clean dark UI.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🚀</div>
+        <div class="project-body">
+          <h3>Landing Page</h3>
+          <p>A modern, responsive landing page with sections for features, testimonials, and a CTA.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <div class="container">
+    <p class="section-label">My Background</p>
+    <h2 class="section-title">Resume</h2>
+    <div class="divider" style="margin:0 auto 1.5rem;"></div>
+    <p>Download my resume to learn more about my education, experience, and skills.</p>
+    <a href="ROHITHRESUME.pdf" download class="btn btn-primary">📄 Download Resume</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Let's Talk</p>
+    <h2 class="section-title">Contact Me</h2>
+    <div class="divider"></div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>I'm currently open to new opportunities and collaborations. Feel free to reach out!</p>
+        <div class="contact-item">
+          <span>📧</span>
+          <span><a href="mailto:rohith@email.com">rohith@email.com</a></span>
+        </div>
+        <div class="contact-item">
+          <span>📞</span>
+          <span>+91 9023479657</span>
+        </div>
+        <div class="contact-item">
+          <span>🔗</span>
+          <span><a href="https://www.linkedin.com/in/gutla-rohith-75116832b/" target="_blank">linkedin.com/in/gutla-rohith</a></span>
+        </div>
+        <div class="contact-item">
+          <span>💻</span>
+          <span><a href="https://github.com/rohithempire9" target="_blank">github.com/rohithempire9</a></span>
+        </div>
+      </div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <input type="text" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Gutla Rohith</strong>. Built with ❤️ using HTML, CSS & JavaScript.</p>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? '#f5f5f5' : '';
+    });
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✅ Sent!';
+    btn.style.background = '#2ecc71';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>

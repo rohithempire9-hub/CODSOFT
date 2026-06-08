@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyFlow – Learn Smarter</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #faf9f6;
+    --text: #1c1c1e;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --accent-light: #eef2ff;
+    --border: #e5e7eb;
+    --card: #ffffff;
+    --hero-bg: #1c1c2e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,249,246,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .logo span { color: var(--text); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { background: #4338ca; color: #fff !important; }
+
+  /* HERO */
+  #hero {
+    background: var(--hero-bg);
+    color: #fff;
+    padding: 7rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #4f46e5 0%, transparent 60%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(79,70,229,0.3);
+    border: 1px solid rgba(79,70,229,0.6);
+    color: #a5b4fc;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  #hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #hero h1 em { color: #818cf8; font-style: normal; }
+  #hero p {
+    font-size: 1.1rem;
+    color: #a1a1aa;
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.22s;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(79,70,229,0.4); }
+  .btn-ghost { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    margin-top: 4rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .stat { text-align: center; }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 2rem; color: #fff; }
+  .stat-label { font-size: 0.85rem; color: #6b7280; }
+
+  /* FEATURES */
+  #features {
+    padding: 5.5rem 2rem;
+    background: var(--bg);
+  }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 0.75rem;
+  }
+  .section-sub { color: var(--muted); max-width: 480px; margin: 0 auto; font-size: 0.98rem; }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .feature-icon {
+    width: 48px; height: 48px;
+    background: var(--accent-light);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .feature-card p { font-size: 0.9rem; color: var(--muted); }
+
+  /* HOW IT WORKS */
+  #how {
+    padding: 5.5rem 2rem;
+    background: var(--hero-bg);
+    color: #fff;
+  }
+  #how .section-title { color: #fff; }
+  #how .section-sub { color: #6b7280; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto; }
+  .step { text-align: center; }
+  .step-num {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1.1rem;
+    margin: 0 auto 1rem;
+    color: #fff;
+  }
+  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: #e2e8f0; }
+  .step p { font-size: 0.88rem; color: #6b7280; }
+
+  /* TESTIMONIALS */
+  #testimonials { padding: 5.5rem 2rem; background: var(--bg); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 960px; margin: 0 auto; }
+  .testimonial {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+  .stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .testimonial p { font-size: 0.92rem; color: var(--muted); margin-bottom: 1rem; font-style: italic; }
+  .reviewer { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+  .reviewer span { color: var(--muted); font-weight: 400; }
+
+  /* CTA */
+  #cta {
+    padding: 6rem 2rem;
+    background: var(--accent);
+    text-align: center;
+    color: #fff;
+  }
+  #cta h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+  #cta p { color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-size: 1rem; }
+  .btn-white { background: #fff; color: var(--accent); }
+  .btn-white:hover { background: #f1f5f9; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    color: #6b7280;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  footer a { color: #818cf8; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0.9rem 1rem; }
+    .nav-links { display: none; }
+    .hero-stats { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Study<span>Flow</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#cta" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">🎓 New – AI-Powered Study Tools</div>
+  <h1>Learn Smarter, Not <em>Harder</em></h1>
+  <p>StudyFlow helps students organize their learning, track progress, and stay motivated — all in one clean app.</p>
+  <div class="hero-actions">
+    <a href="#cta" class="btn btn-primary">Start for Free</a>
+    <a href="#how" class="btn btn-ghost">See How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-number">50K+</div><div class="stat-label">Active Students</div></div>
+    <div class="stat"><div class="stat-number">4.9★</div><div class="stat-label">Average Rating</div></div>
+    <div class="stat"><div class="stat-number">200+</div><div class="stat-label">Courses Covered</div></div>
+    <div class="stat"><div class="stat-number">Free</div><div class="stat-label">To Get Started</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-header">
+    <p class="section-label">Why StudyFlow</p>
+    <h2 class="section-title">Everything You Need to Succeed</h2>
+    <p class="section-sub">Simple tools that actually work — designed by students, for students.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <h3>Smart Study Scheduler</h3>
+      <p>Automatically plans your study sessions based on deadlines and your personal calendar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Goal Tracking</h3>
+      <p>Set weekly goals and track your progress with visual charts that keep you motivated.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📒</div>
+      <h3>Smart Notes</h3>
+      <p>Take structured notes with markdown support, tags, and instant search across all your subjects.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Reminders & Alerts</h3>
+      <p>Never miss a deadline again. Get smart notifications for assignments, exams, and study breaks.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Progress Analytics</h3>
+      <p>Detailed insights into your study habits, strengths, and areas that need more attention.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h3>Study Groups</h3>
+      <p>Create or join study groups, share notes, and collaborate with classmates in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-header">
+    <p class="section-label">Simple Process</p>
+    <h2 class="section-title">Get Started in Minutes</h2>
+    <p class="section-sub">No complicated setup. Just sign up and start studying better right away.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Create Your Account</h3>
+      <p>Sign up for free in under 30 seconds — no credit card needed.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Add Your Subjects</h3>
+      <p>Tell us what you're studying and when your exams are.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Follow Your Plan</h3>
+      <p>StudyFlow builds your schedule and you follow it — simple as that.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Track & Improve</h3>
+      <p>Watch your progress grow and keep refining your approach.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <p class="section-label">Real Students</p>
+    <h2 class="section-title">What People Are Saying</h2>
+    <p class="section-sub">Don't just take our word for it.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"My grades jumped a full letter grade after just one semester of using StudyFlow. I finally feel in control of my schedule."</p>
+      <div class="reviewer">Priya Sharma <span>· B.Tech Student, IIT Hyderabad</span></div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"I love how clean the interface is. I've tried 10 other apps and none of them felt this natural to use."</p>
+      <div class="reviewer">Arjun Mehta <span>· Engineering Student</span></div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★☆</div>
+      <p>"The goal tracking feature is a game changer. I used to procrastinate a lot but now I actually look forward to study sessions."</p>
+      <div class="reviewer">Sneha Reddy <span>· CA Aspirant</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>Ready to Study Smarter?</h2>
+  <p>Join over 50,000 students who are already learning better with StudyFlow.</p>
+  <a href="#" class="btn btn-white">Get Started — It's Free</a>
+</section>
+
+<footer>
+  <p>© 2026 StudyFlow. Made with ❤️ for students. | <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></p>
+</footer>
+
+</body>
+</html>
